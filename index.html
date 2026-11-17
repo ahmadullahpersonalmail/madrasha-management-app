@@ -310,25 +310,6 @@ function dirV(){$("sob").innerHTML=`<div class="card"><input id="ds" placeholder
 async function dirL(){var q=($("ds")||{value:""}).value.trim().replace(/[,()%*]/g,""),s=sb.from("people").select("*").not("madrasa_name","is",null).neq("madrasa_name","");if(q)s=s.or(`madrasa_name.ilike.%${q}%,madrasa_addr.ilike.%${q}%`);var r=(await s.limit(40)).data||[];r.forEach(p=>{PP[p.id]=p});
 if(!$("dl"))return;$("dl").innerHTML=r.map(p=>`<div class="card" style="display:flex;gap:10px;align-items:center">${p.madrasa_logo?`<img src="${esc(p.madrasa_logo)}" style="width:56px;height:56px;border-radius:12px;object-fit:cover">`:'<div style="font-size:36px">🕌</div>'}<div style="flex:1"><b>${esc(p.madrasa_name)}</b><br><small class="mu" style="margin:0">${esc(p.madrasa_addr||"")}</small><br><small class="mu" style="margin:0">পরিচালক: ${esc(p.full_name)}</small></div><div style="white-space:nowrap"><button class="s m" onclick="chat('${p.id}')">💬</button><button class="m" onclick="frAdd('${p.id}')">➕</button></div></div>`).join("")||'<div class="card"><p class="mu">কোনো মাদরাসা পাওয়া যায়নি</p></div>'}
 setInterval(()=>{if(ME)unread()},30000);
-// পোস্ট ডিলিট করার ফাংশন
-async function deletePost(postId) {
-    if (confirm('আপনি কি সত্যিই এই পোস্টটি মুছে ফেলতে চান?')) {
-        const { error } = await supabase
-            .from('posts')
-            .delete()
-            .eq('id', postId);
 
-        if (error) {
-            alert('ডিলিট করতে সমস্যা হয়েছে: ' + error.message);
-        } else {
-            alert('পোস্ট সফলভাবে মুছে ফেলা হয়েছে!');
-            location.reload(); // পেজ রিফ্রেশ করার জন্য
-        }
-    }
-}
-  // যদি ইউজার এডমিন হয় কিংবা পোস্টের মালিক হয়, তবে ডিলিট বাটন দেখাবে
-if (profile && (profile.role === 'admin' || user.id === post.user_id)) {
-    htmlContent += `<button onclick="deletePost('${post.id}')" style="color: red; background: none; border: none; cursor: pointer; margin-top: 10px;">ডিলিট পোস্ট</button>`;
-}
 start();
 </script></body></html>
