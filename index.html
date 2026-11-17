@@ -89,7 +89,7 @@ function cutSum(u,m){return S.cuts.filter(x=>x.who===u&&(x.dt||"").indexOf(m)==0
 function sumB(a,m){return S[a].filter(r=>(r.dt||"").indexOf(m)==0).reduce((x,r)=>x+r.amt,0)}
 function lazy(f){f().then(h=>{var e=$("ax");if(e)e.innerHTML=h});return'<div id="ax"><p class="mu">লোড হচ্ছে…</p></div>'}
 // ===== স্প্ল্যাশ =====
-async function start(){var sp=$("sp");sp.innerHTML='<div class="ph" id="spp">🕌</div><h1 id="spn">মাদরাসা প্রো</h1><p id="spt"></p><p id="spc"></p><div class="bar"><i></i></div><p style="margin-top:10px;font-size:13px;color:#b8c2e0">লোড হচ্ছে…</p>';
+async function start(){var sp=$("sp");sp.innerHTML='<div class="ph" id="spp">🕌</div><h1 id="spn">মাদরাসা ম্যানেজমেন্ট</h1><p id="spt"></p><p id="spc"></p><div class="bar"><i></i></div><p style="margin-top:10px;font-size:13px;color:#b8c2e0">লোড হচ্ছে…</p>';
 var b=sb.from("brand").select("*").eq("id",1).maybeSingle().then(r=>{BR=r.data||{};if(BR.photo)$("spp").innerHTML='<img src="'+esc(BR.photo)+'" style="width:100%;height:100%;object-fit:cover">';if(BR.name)$("spn").textContent=BR.name;$("spt").textContent=BR.tagline||"";$("spc").textContent=BR.phone?"📞 "+BR.phone:""}).catch(()=>{});
 await Promise.all([b,new Promise(x=>setTimeout(x,2100))]);sp.style.display="none";boot()}
 // ===== লগইন =====
@@ -130,7 +130,7 @@ function hdr(){unread();$("top").style.display="flex";$("av").innerHTML=ME.avata
 function dr(o){$("dr").classList.toggle("o",!!o);$("sh").classList.toggle("o",!!o)}
 async function go(k){clearTimeout(tm);await doSave();mod=k;var m=MD.find(x=>x[0]==k);sub=m[3][0]||"";if(MK[m[4]])await loadMod(m[4]);dr(0);render();window.scrollTo(0,0)}
 function render(){var m=MD.find(x=>x[0]==mod)||MD[0],subs=m[3].filter(k=>k!="year"||canE("set"));$("tt").textContent=m[2];
-$("dr").innerHTML=`<h3>${esc(S.info.name||"মাদরাসা প্রো")}</h3>${TEAMS.length?`<select onchange="switchCtx(this.value)"><option value="${ME.id}" ${OW==ME.id?"selected":""}>আমার মাদরাসা</option>${TEAMS.map(t=>`<option value="${t.owner_id}" ${OW==t.owner_id?"selected":""}>${esc(t.nm)} (টিম সদস্য)</option>`).join("")}</select>`:""}`+MD.filter(vis).map(x=>`<a class="${x[0]==mod?"on":""}" onclick="go('${x[0]}')"><span>${x[1]}</span>${x[2]}</a>`).join("")+`<a onclick="logout()" style="color:#b3392f"><span>🚪</span>লগআউট</a>`;
+$("dr").innerHTML=`<h3>${esc(S.info.name||"মাদরাসা ম্যানেজমেন্ট")}</h3>${TEAMS.length?`<select onchange="switchCtx(this.value)"><option value="${ME.id}" ${OW==ME.id?"selected":""}>আমার মাদরাসা</option>${TEAMS.map(t=>`<option value="${t.owner_id}" ${OW==t.owner_id?"selected":""}>${esc(t.nm)} (টিম সদস্য)</option>`).join("")}</select>`:""}`+MD.filter(vis).map(x=>`<a class="${x[0]==mod?"on":""}" onclick="go('${x[0]}')"><span>${x[1]}</span>${x[2]}</a>`).join("")+`<a onclick="logout()" style="color:#b3392f"><span>🚪</span>লগআউট</a>`;
 $("app").innerHTML=mod=="home"?dash():(subs.length>1?`<div class="chips">${subs.map(k=>`<button class="${k==sub?"on":""}" onclick="sub='${k}';render()">${ttl(k)}</button>`).join("")}</div>`:"")+view(sub);if(mod=="home")latest()}
 function view(k){return C[k]?list(k):({attS:()=>attV("students"),attT:()=>attV("staff"),sms:smsV,rc:rcV,pl:plV,prof:profV,year:yearV,annG:()=>lazy(annHtml),cmpS:cmpS,adU:()=>lazy(usersHtml),adC:()=>lazy(cmpHtml),adB:()=>lazy(brandHtml),tm:()=>lazy(tmHtml),rq:()=>lazy(rqHtml),lg:()=>lazy(lgHtml),qCreate:qCreateV,qBank:qBankV,qSaved:qSavedV})[k]()}
 // ===== ড্যাশবোর্ড =====
